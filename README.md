@@ -94,7 +94,9 @@ class UserDAOImpl @Inject() (db : DB) extends UserDAO {
   }
 
   def save(user: User) = {
-    collection.insert(user)
+    collection.update(Json.obj("userID" -> user.userID),
+      user,
+      upsert = true)
     Future.successful(user)
   }
 }
